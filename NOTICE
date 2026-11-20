@@ -1,0 +1,24 @@
+SGPT Lean formalization
+
+The Lean formalization is distributed under the Apache License, Version 2.0.
+
+The two scheme-module pushforward files retain their MIT notice for Chris Dare's
+contributions. Their upstream license and attribution text is in
+LICENSES/derived-algebraic-geometry.md.
+
+The Kähler form and closedness modules retain their Apache-2.0 notices for
+Zayn Blore's contributions. The upstream license text is in
+LICENSES/kahler-upstream.txt.
+
+Additional copyright notices are retained in the corresponding source files.
+The comparison modules under SGPT/Foundations/PublishedEnvelope and the
+associated published support are derived from Mingchen Xia's
+envelope-property-lean at bb7130411c5594e951c5923f8b82c021ce3d6c8d.
+The original Apache-2.0 notices for those files and their principalization,
+generic freeness and modular algebra dependencies are in LICENSES/.
+The corresponding license texts for the other comparison modules are also
+in LICENSES/.
+
+The incorporated Lean sources have been relocated, and their imports and
+comments have been updated for this distribution.
+The SGPT manuscript is a separate work, identified by its upstream revision.

@@ -1,0 +1,5 @@
+import SGPT.Checks.RationalHull
+
+#check SGPT.NAPotential.BJ.GfIm.RationalHull.OriginalHullRealization
+#check SGPT.NAPotential.BJ.GfIm.RationalHull.exists_originalHullRealization_of_isRationalGF
+#check SGPT.NAPotential.BJ.GfIm.RationalHull.exists_originalHull_naPotentialAnAt_eq_of_isRationalGF

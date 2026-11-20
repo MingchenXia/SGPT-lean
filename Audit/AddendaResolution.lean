@@ -1,0 +1,21 @@
+import SGPT.Addenda.Resolution
+
+#check SGPT.Unibranch.HironakaG11PresUnconditional.classFunctorialInvariants
+#check SGPT.Unibranch.HironakaG11PresUnconditional.compactSingularCentreResolution
+#check SGPT.Unibranch.HironakaG11PresUnconditional.exists_endpoint
+#check SGPT.Unibranch.HironakaG11PresUnconditional.padFamilyResidualInputs
+#check SGPT.Unibranch.LocalEmbedding.ofChart
+#check SGPT.Unibranch.SourceReducedComplexSpace.IsAnalyticSubset.preimage_iso
+#check SGPT.Unibranch.SourceReducedComplexSpace.IsIsoOver
+#check SGPT.Unibranch.SourceReducedComplexSpace.IsProperBimeromorphic
+#check SGPT.Unibranch.SourceReducedComplexSpace.IsProperBimeromorphic.isConnected_fiber_of_isUnibranch
+#check SGPT.Unibranch.SourceReducedComplexSpace.IsResolution
+#check SGPT.Unibranch.SourceReducedComplexSpace.IsResolution.comp_iso
+#check SGPT.Unibranch.SourceReducedComplexSpace.IsSmooth
+#check SGPT.Unibranch.SourceReducedComplexSpace.isAnalyticSubset_preimage_val
+#check SGPT.Unibranch.SourceReducedComplexSpace.ofClosedAnalytic
+#check SGPT.Unibranch.exists_resolution_ofClosedAnalytic
+#check SGPT.Unibranch.exists_resolution_of_iso
+#check SGPT.Unibranch.isResolution_resolutionMorphism
+#check SGPT.Unibranch.isSmooth_ofClosedAnalytic_of_isClosedSubmanifold
+#check SGPT.Unibranch.resolutionMorphism

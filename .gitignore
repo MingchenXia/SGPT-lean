@@ -1,0 +1,10 @@
+/.lake/
+/.build/
+/.cache/
+*.olean
+*.olean.private
+*.olean.server
+*.ilean
+*.ir
+*.ir.sig
+__pycache__/

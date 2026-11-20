@@ -1,0 +1,9 @@
+import SGPT.Checks.Trace
+
+#check SGPT.NAPotential.TraceComparison.source_comp_traceop
+#check SGPT.NAPotential.TraceComparison.source_naTrace_definition
+#check SGPT.NAPotential.TraceComparison.source_trace_birational_pullback
+#check SGPT.NAPotential.TraceComparison.source_trace_changeRepresentative
+#check SGPT.Trace.Bertini.analyticBertini
+#check SGPT.Trace.Bertini.coPluripolar_abtTrace_of_original_global_qpsh
+#check SGPT.Trace.Bertini.coPluripolar_abtTrace_of_original_projective

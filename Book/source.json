@@ -1,0 +1,163 @@
+{
+  "repository": "https://github.com/MingchenXia/SGPT",
+  "source_commit": "4390e77497d699ac3a4f878b97c34fc867513add",
+  "preceding_verified_edition": "17583d1ec434d0458823c2d994e0ba908e9612d0",
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "git_blob": "7a958c83711f0bdcc77a9b419673825efff5ca26",
+      "sha256": "0a7162058afc2f81d2406990265e86112248e8bb6d84e08162e39a3264d773da"
+    },
+    {
+      "path": "ComplexGeometry.bib",
+      "git_blob": "4402dcc1ba9dc7f12ebf0337e5421e7deb5299ef",
+      "sha256": "20027e1aacbff399e161e9758ab016bf32e6c165dd1c3bc3a0400e37bbf4eb90"
+    },
+    {
+      "path": "README.md",
+      "git_blob": "f81e2dec979b8f6bf8747647f1de43140ba6c93f",
+      "sha256": "56f7e0e5841aa894e0bd3dbb728f5aec4b97339efbb9046dd18933de48e957d2"
+    },
+    {
+      "path": "author/acknowledgement.tex",
+      "git_blob": "235c5847ee29d42221fe55905562c1a218368962",
+      "sha256": "2ff985c79e3f6a2a59c8da940100b26b624219c17db91dc291a023f998a6bbc7"
+    },
+    {
+      "path": "author/appendix_almostsg.tex",
+      "git_blob": "653899b46cfc58d8244cff67a75999de8567221d",
+      "sha256": "76f5375e48aecc15d7d3152e8b624d99c811949b826e542e6870c1f937fa5035"
+    },
+    {
+      "path": "author/appendix_convex.tex",
+      "git_blob": "7a0a5074a13eeec7cd4d14b92858b76f9885ec8b",
+      "sha256": "d82c6c708da7f66d62452b3e4a5c252d5ba48bef3d2f59b863079e7716e57189"
+    },
+    {
+      "path": "author/appendix_unibranch.tex",
+      "git_blob": "43ba4763cc6752033401d451fd3f7144ded9e71d",
+      "sha256": "ff7e50bab4765f30704022158754391016552ba2d0bedec8edbc8f8a59dea441"
+    },
+    {
+      "path": "author/chapter_Bergman.tex",
+      "git_blob": "5d4948e726261e21ca1cc84880622ed7d885f751",
+      "sha256": "bfeabfe03229d17f419426673759b139a3c0c87f78c69397603d9c2643c9a84b"
+    },
+    {
+      "path": "author/chapter_Igood.tex",
+      "git_blob": "3eee81a2092eb0a44b6ffb5936b7d455d65f15bc",
+      "sha256": "93f94eea4f761c0e3c414bc70b84911ca6aa646cec229ac6caf8461cae7e81cd"
+    },
+    {
+      "path": "author/chapter_NApotential.tex",
+      "git_blob": "57e01094f96c4bdaee8cd3bd782664263f40cc68",
+      "sha256": "0ddd757445782181cb39b07a7fb79f99b87322ae73735f5f401baefe6dde908d"
+    },
+    {
+      "path": "author/chapter_Okounkov.tex",
+      "git_blob": "3b43dbfc0608cd9f668794d0db4f192b06f03265",
+      "sha256": "95d17a4b125280317e2b6e81bd04b24d67427f06cc0cde237c7a54f7ea699347"
+    },
+    {
+      "path": "author/chapter_bdiv.tex",
+      "git_blob": "64442eb00f1279cbb1b0e44242d8282b532925c6",
+      "sha256": "ae5f5f880e106caedc05d110eb00b45b3eb299c5fcc1199caf96870dad1cfe01"
+    },
+    {
+      "path": "author/chapter_bdiv_sec_11_3.tex",
+      "git_blob": "181d0831972e0f24de8717b649a74fcb5be725b2",
+      "sha256": "33ae77127903f0528413b3ce2ecfa3b822acdd2d035efc4b5c29e8f3d0ebdfe6"
+    },
+    {
+      "path": "author/chapter_comp.tex",
+      "git_blob": "f961261895e6c5c80f2f497b57de84b423a7fbc2",
+      "sha256": "eae625f59e776f7f43db1c8c5845d5ebc3732b64adcc0547bdf29d7ef3f0aa95"
+    },
+    {
+      "path": "author/chapter_envelopes.tex",
+      "git_blob": "e1f65754297be773966aace06e3b2d04fd941ac3",
+      "sha256": "ba5436b9a2559cb91d8977b55244293913f60b262b4989f0c5224d7d81c394ef"
+    },
+    {
+      "path": "author/chapter_history.tex",
+      "git_blob": "cf7ca9c277ce6319d74a35b7aff1c966d0232799",
+      "sha256": "17ca0a2bf8f7cb43e42423d1ee6d4d119ca2664db37b76599fe6a384ce6981e5"
+    },
+    {
+      "path": "author/chapter_npp.tex",
+      "git_blob": "52d8b5618a783e477234d872438a8494af3a5f75",
+      "sha256": "bd1ff90db732b5e56297972d7dd4ab282cbc01c6ec77873ba4f2dc1e9c1d8b75"
+    },
+    {
+      "path": "author/chapter_pshfunctions.tex",
+      "git_blob": "4ef7b7256522b999a41e28838e4cf04d3766b837",
+      "sha256": "5aa8dfd6c8088b5475d08fdceede3a1fca0e2fb541cba94116cac00b5c7cf697"
+    },
+    {
+      "path": "author/chapter_rays.tex",
+      "git_blob": "590459bae35b10bb0ecbb4a8727c5810f6d351a9",
+      "sha256": "1090b3ca1031b17110a9a2c42e82465624053d86bc37c00263e6879bc164d680"
+    },
+    {
+      "path": "author/chapter_testcurve.tex",
+      "git_blob": "e4e7e6c6954de6fd396d14059f6efcfbdcddccef",
+      "sha256": "6e18b3853a3277601bff2c684beebd190dd27f3e73adfd4c6cdaa7c745ef30f3"
+    },
+    {
+      "path": "author/chapter_toric_ample.tex",
+      "git_blob": "fe7cd29df1f2c649350871bb6c51c4f2426d993c",
+      "sha256": "a7515ccbfa6627decec22da873efd797aa29ee647ca392d9cf4e209e765714f5"
+    },
+    {
+      "path": "author/chapter_toric_big.tex",
+      "git_blob": "43101d2b6e28c139f43a58b86bc3c8b88090c14f",
+      "sha256": "e5c37865dcef7817901c6b54432a001168f25fabeb1033e40dfac399d0f22854"
+    },
+    {
+      "path": "author/chapter_trace.tex",
+      "git_blob": "e5f7f5fbc93e12362b445ffff699d943bc6eb48f",
+      "sha256": "7cb3d222d998b0c4fdac3bd1aff7bd46ec8bf5ef6da49d5dc473a6601c95a8d9"
+    },
+    {
+      "path": "author/conventions.tex",
+      "git_blob": "432200588f43b28a9f39ee0a1e3e2b9ddb7cb11b",
+      "sha256": "cc466c6215a5e5e19dce85cb214c0d303453d2faa4beb17187c8bad62686f8eb"
+    },
+    {
+      "path": "author/part_Igood.tex",
+      "git_blob": "cfe2d313c31d5fdee36dad56165d090f545fc441",
+      "sha256": "f2c49621b9f59c986a630a21b530f20da449210cea4d3bd6106e10e93ad913b1"
+    },
+    {
+      "path": "author/part_app.tex",
+      "git_blob": "e429ec96d8ffd7e259d5bdff122193071ff8a1f6",
+      "sha256": "29164b81dcf968e034301bdbbb6cc817da144dd371cf2047ca9442d87336107b"
+    },
+    {
+      "path": "author/part_prel.tex",
+      "git_blob": "97f9a868af2caebf036b50e5d42a1536478eb200",
+      "sha256": "4760e3abe443059499219d58515e1f85cba795b8e306ea125a80c1530e8c5d32"
+    },
+    {
+      "path": "author/preface.tex",
+      "git_blob": "6051498d253e29e1bdc8074a507d545e0aca6a49",
+      "sha256": "2df4c5cb1e9091d844f7e26579726a47103d3729d47faf3913170b5ea2bde7f3"
+    },
+    {
+      "path": "author/references.tex",
+      "git_blob": "5b76d37781dc533f9c7f4e0ee701051802cab7d4",
+      "sha256": "25fdc6899313dae75ea3d4626e8266e49dfa32cfbc38158f525980db404d0589"
+    },
+    {
+      "path": "book.tex",
+      "git_blob": "3b25a2a4a6f6ace4af531cbfaba246e1f4733971",
+      "sha256": "9ebd377176e05ea08ecfd5a27b137758183864c102c189dc4302485fc2c47990"
+    },
+    {
+      "path": "mathematical_revision_log.tex",
+      "git_blob": "d2b389c26a0d4dee2095adf7583d5168498b2c07",
+      "sha256": "d5275832a5043ab74539e6d58de83f861cab8580aeb774babdde41c7f71c85db"
+    }
+  ],
+  "source_note": "This edition adds references to Foundations of pluripotential theory and credits the Lean formalization. The indexed statements and equation anchors keep their identifiers, and the changes in eleven indexed entries are confined to references and explanatory notes."
+}

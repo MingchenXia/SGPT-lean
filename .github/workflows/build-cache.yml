@@ -1,0 +1,223 @@
+name: Build the SGPT cache
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: Cache profile
+        type: choice
+        options: [all, core, comparison, literature]
+        default: all
+      source:
+        description: Exact source commit when resuming
+        type: string
+      pass:
+        description: Build pass number
+        type: number
+        default: 1
+      workers:
+        description: Concurrent Lean compiler processes
+        type: choice
+        options: ['1', '2', '3', '4']
+        default: '4'
+      seed:
+        description: One cache commit and checkpoint path per line
+        type: string
+
+jobs:
+  build:
+    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, 'Resume SGPT comparison caches') || startsWith(github.event.head_commit.message, 'Publish SGPT core checkpoint') }}
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: ${{ fromJSON(github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Publish SGPT core checkpoint') && '["core"]' || github.event_name == 'push' && '["comparison","literature"]' || inputs.profile && inputs.profile != 'all' && format('["{0}"]', inputs.profile) || '["core","comparison","literature"]') }}
+    name: ${{ matrix.profile }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    concurrency:
+      group: sgpt-cache-${{ inputs.source || github.sha }}-${{ matrix.profile }}
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: write
+    env:
+      PROFILE: ${{ matrix.profile }}
+      SOURCE: ${{ inputs.source || github.sha }}
+      PASS: ${{ inputs.pass || 1 }}
+      WORKERS: ${{ inputs.workers || '4' }}
+      CHECKPOINT_ONLY: ${{ github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Publish SGPT core checkpoint') }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ inputs.source || github.sha }}
+      - uses: leanprover/lean-action@ba3fdfe5c4476c925da13bf11a005ddb47e47aee
+        with:
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          use-mathlib-cache: 'false'
+          use-github-cache: 'false'
+      - name: Fetch pinned Mathlib artifacts
+        shell: bash
+        run: |
+          for attempt in 1 2 3; do
+            if lake exe cache get; then exit 0; fi
+            if [[ "$attempt" != 3 ]]; then sleep 10; fi
+          done
+          exit 1
+      - name: Restore verified work from a previous pass
+        if: ${{ inputs.pass > 1 }}
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
+        with:
+          path: .build/profile
+          key: sgpt-${{ runner.arch }}-${{ env.SOURCE }}-${{ env.PROFILE }}-${{ env.PASS }}
+          restore-keys: sgpt-${{ runner.arch }}-${{ env.SOURCE }}-${{ env.PROFILE }}-
+      - name: Seed this build from a published checkpoint
+        if: ${{ (inputs.seed && inputs.pass == 1) || github.event_name == 'push' }}
+        env:
+          BUILD_SEED: ${{ inputs.seed }}
+        shell: bash
+        run: |
+          pattern='^([0-9a-f]{40}) (checkpoints/((core|comparison|literature)/)?([0-9a-f]{40})(/partial/[0-9a-f]{16})?)$'
+          if [[ -z "$BUILD_SEED" ]]; then
+            BUILD_SEED=$(git log -1 --format=%B | git interpret-trailers --parse |
+              sed -n "s/^SGPT-Cache-$PROFILE: //p")
+          fi
+          if [[ -z "$BUILD_SEED" && "$CHECKPOINT_ONLY" == true ]]; then exit 0; fi
+          IFS=: read -r -a dirs <<< "$(lake env printenv LEAN_PATH)"
+          deps=()
+          for dir in "${dirs[@]}"; do
+            if [[ -d "$dir" ]]; then deps+=(--dependency-root "$dir"); fi
+          done
+          destination=.build/profile
+          mapfile -t seeds <<< "$BUILD_SEED"
+          for index in "${!seeds[@]}"; do
+            [[ "${seeds[$index]}" =~ $pattern ]]
+            cache_sha=${BASH_REMATCH[1]}
+            checkpoint=${BASH_REMATCH[2]}
+            seed_source=${BASH_REMATCH[5]}
+            archive="$RUNNER_TEMP/seed-artifacts"
+            seed_tree="$RUNNER_TEMP/seed-source"
+            if (( index > 0 )); then destination=".build/supplementary/$index"; fi
+            mkdir -p "$archive/chunks"
+            remote="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$cache_sha/$checkpoint"
+            curl -fsSL --retry 3 "$remote/MANIFEST.json" -o "$archive/MANIFEST.json"
+            chunks=$(jq -er '.chunks[].name' "$archive/MANIFEST.json")
+            while IFS= read -r chunk; do
+              [[ "$chunk" =~ ^[0-9]+\.part$ ]]
+              curl -fsSL --retry 3 "$remote/chunks/$chunk" -o "$archive/chunks/$chunk"
+            done <<< "$chunks"
+            git fetch --depth=1 origin "$seed_source"
+            git worktree add --detach "$seed_tree" "$seed_source"
+            python3 scripts/build_cache.py --source "$seed_tree" --lean "$(elan which lean)" "${deps[@]}" \
+              restore --for-build "$archive" "$destination"
+            git worktree remove "$seed_tree"
+            rm -rf "$archive"
+          done
+      - name: Build independent profile
+        id: compile
+        shell: bash
+        env:
+          SGPT_FAILURE_GRACE_MINUTES: '6'
+        run: |
+          status=0
+          minutes=205
+          if [[ "$PROFILE" == comparison || "$PROFILE" == literature ]]; then
+            minutes=60
+          fi
+          if [[ "$CHECKPOINT_ONLY" == true ]]; then minutes=27; fi
+          seeds=()
+          for seed in .build/supplementary/*; do
+            if [[ -d "$seed" ]]; then seeds+=(--seed-root "$seed"); fi
+          done
+          free -h
+          df -h .
+          SGPT_CACHE_OUTPUT="$PWD/.build/snapshot" scripts/build_profile.sh "$PROFILE" .build/profile \
+            --workers "$WORKERS" --minutes "$minutes" "${seeds[@]}" || status=$?
+          if [[ -d .build/supplementary ]]; then rm -rf -- .build/supplementary; fi
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          if [[ -f .build/snapshot/MANIFEST.json ]]; then
+            echo "snapshot=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Save checked modules for the next pass
+        id: save
+        if: ${{ steps.compile.outputs.status == '75' && env.CHECKPOINT_ONLY != 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830
+        with:
+          path: .build/profile
+          key: sgpt-${{ runner.arch }}-${{ env.SOURCE }}-${{ env.PROFILE }}-${{ env.PASS }}
+      - name: Publish checked compiler artifacts
+        if: ${{ steps.compile.outputs.snapshot == 'true' }}
+        id: publish
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh auth setup-git
+          if ! git cat-file -e "$GITHUB_WORKFLOW_SHA^{commit}" 2>/dev/null; then
+            git fetch --depth=1 origin "$GITHUB_WORKFLOW_SHA"
+          fi
+          git show "$GITHUB_WORKFLOW_SHA:scripts/publish_cache.sh" > "$RUNNER_TEMP/publish_cache.sh"
+          bash "$RUNNER_TEMP/publish_cache.sh" "$PROFILE" .build/snapshot | tee "$RUNNER_TEMP/cache-publish.log"
+          checkpoint=$(sed -n 's/^Checkpoint //p' "$RUNNER_TEMP/cache-publish.log")
+          cache_sha=$(sed -n 's/^Verified build-cache at //p' "$RUNNER_TEMP/cache-publish.log")
+          [[ "$checkpoint" =~ ^checkpoints/$PROFILE/$SOURCE(/partial/[0-9a-f]{16})?$ ]]
+          [[ "$cache_sha" =~ ^[0-9a-f]{40}$ ]]
+          echo "path=$checkpoint" >> "$GITHUB_OUTPUT"
+          echo "sha=$cache_sha" >> "$GITHUB_OUTPUT"
+      - name: Verify the pinned remote files and a clean import
+        if: ${{ steps.compile.outputs.snapshot == 'true' }}
+        shell: bash
+        env:
+          CHECKPOINT: ${{ steps.publish.outputs.path }}
+          CACHE_SHA: ${{ steps.publish.outputs.sha }}
+          COMPILE_STATUS: ${{ steps.compile.outputs.status }}
+        run: |
+          [[ "$CACHE_SHA" =~ ^[a-f0-9]{40}$ ]]
+          archive="$PWD/.build/snapshot"
+          remote="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$CACHE_SHA/$CHECKPOINT"
+          cmp "$archive/MANIFEST.json" <(curl -fsSL --retry 3 "$remote/MANIFEST.json")
+          for chunk in "$archive"/chunks/*.part; do
+            cmp "$chunk" <(curl -fsSL --retry 3 "$remote/chunks/${chunk##*/}")
+          done
+          rm -rf .build/profile/lean
+          lean_path="$(lake env printenv LEAN_PATH)"
+          IFS=: read -r -a dirs <<< "$lean_path"
+          deps=()
+          for dir in "${dirs[@]}"; do
+            if [[ -d "$dir" ]]; then deps+=(--dependency-root "$dir"); fi
+          done
+          python3 scripts/build_cache.py --lean "$(elan which lean)" "${deps[@]}" \
+            restore "$archive" .build/restored
+          if [[ "$COMPILE_STATUS" == 0 ]]; then
+            case "$PROFILE" in
+              core) audit=SGPT ;;
+              comparison) audit=ChecksComparison ;;
+              literature) audit=ChecksLiterature ;;
+            esac
+            probe="Audit/$audit.lean"
+          else
+            probe=.build/PartialCacheProbe.lean
+            root=$(jq -er '.roots[0]' "$archive/MANIFEST.json")
+            printf 'import %s\n' "$root" > "$probe"
+          fi
+          LEAN_PATH="$PWD/.build/restored:$lean_path" lean "$probe" > .build/restored-import.log
+          printf 'Restored and checked %s from %s (%s)\n' "$PROFILE" "$CACHE_SHA" "$CHECKPOINT" >> "$GITHUB_STEP_SUMMARY"
+      - name: Continue an unfinished build
+        if: ${{ env.CHECKPOINT_ONLY != 'true' && steps.compile.outputs.status == '75' && steps.save.outcome == 'success' && steps.compile.outputs.snapshot == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [[ "$PASS" =~ ^[1-4]$ ]]
+          gh workflow run build-cache.yml --ref main -f profile="$PROFILE" -f source="$SOURCE" \
+            -f pass="$((PASS + 1))" -f workers="$WORKERS"
+      - name: Report stopped build
+        if: ${{ steps.compile.outputs.status != '0' && (steps.compile.outputs.status != '75' || steps.compile.outputs.snapshot != 'true' || (env.CHECKPOINT_ONLY != 'true' && steps.save.outcome != 'success')) }}
+        env:
+          COMPILE_STATUS: ${{ steps.compile.outputs.status }}
+        run: |
+          echo "Build stopped with status $COMPILE_STATUS. See the build and checkpoint steps."
+          exit 1

@@ -1,0 +1,13 @@
+import SGPT.Hodge.SourceAugmentedCurrentCorrespondence
+
+#print SGPT.Hodge.BDivChain.SourceAugmentedDraft.source_Iequiv_curr_b_div
+#print SGPT.Hodge.BDivChain.SourceAugmentedDraft.exists_positiveCurrent_realizing_augmented
+#print SGPT.Hodge.BDivChain.SourceAugmentedDraft.exists_divisorial_currentAny_of_class_sum
+#print SGPT.Hodge.BDivChain.SourceAugmentedDraft.class_tendsto_of_weak_net
+#print axioms SGPT.Hodge.BDivChain.SourceAugmentedDraft.source_Iequiv_curr_b_div
+#print axioms SGPT.Hodge.BDivChain.SourceAugmentedDraft.sourceAugmentedCurrentEquiv
+#print axioms SGPT.Hodge.BDivChain.SourceAugmentedDraft.hasDivisorClassSumAny_divisorCurrent
+#print axioms SGPT.Hodge.BDivChain.SourceAugmentedDraft.exists_divisorial_currentAny_of_class_sum
+#print axioms SGPT.Hodge.BDivChain.SourceAugmentedDraft.sourceAugmentedCurrentEquiv_apply_mk
+#print axioms SGPT.Hodge.BDivChain.SourceAugmentedDraft.sourceAugmentedCurrentEquiv_left_inverse
+#print axioms SGPT.Hodge.BDivChain.SourceAugmentedDraft.sourceAugmentedCurrentEquiv_right_inverse

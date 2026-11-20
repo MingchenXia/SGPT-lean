@@ -1,0 +1,9 @@
+import SGPT.Checks.NonArchimedean
+
+#check SGPT.NAPotential.AlgebraicPrimeComparison.naPotentialAnAt_decreasingInf
+#check SGPT.NAPotential.OperationComparison.naAnalytification_join
+#check SGPT.NAPotential.OperationComparison.source_positive_real_scaling
+#check SGPT.NAPotential.OperationComparison.source_sum_correspondence
+#check SGPT.NAPotential.OperationComparison.source_uscSup_correspondence
+#check SGPT.NAPotential.ThinApprox.BJ.SourceDXZ.source_DXZ
+#check SGPT.TestCurve.OriginalBookDH.geomLinearized_book_DH_positive_tail

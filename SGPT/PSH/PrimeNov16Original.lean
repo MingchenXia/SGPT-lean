@@ -1,0 +1,34 @@
+import SGPT.PSH.PrimeNov16OriginalOpenInverse
+import SGPT.PSH.PrimeNov16OriginalGraphManifold
+import SGPT.PSH.PrimeNov16OriginalCommonResolution
+import SGPT.PSH.PrimeNov16OriginalComponentPairing
+import SGPT.PSH.PrimeNov16OriginalComponentGoodRestriction
+import SGPT.PSH.PrimeNov16OriginalGoodDimension
+import SGPT.PSH.PrimeNov16OriginalGoodTransition
+import SGPT.PSH.PrimeNov16OriginalTransitionGraph
+import SGPT.PSH.PrimeNov16OriginalPairedCommon
+import SGPT.PSH.PrimeNov16OriginalPairedComponents
+import SGPT.PSH.PrimeNov16OriginalSmoothCommonResolution
+import SGPT.PSH.PrimeNov16OriginalComponentModification
+import SGPT.PSH.PrimeNov16OriginalMarkedComponentLift
+import SGPT.PSH.PrimeNov16OriginalCancellation
+import SGPT.PSH.PrimeNov16OriginalModificationLocality
+import SGPT.PSH.PrimeNov16OriginalDominatedComponent
+import SGPT.PSH.PrimeNov16OriginalDominatedMap
+import SGPT.PSH.PrimeNov16OriginalMarkedComponentUnique
+import SGPT.PSH.PrimeNov16OriginalComponentModelIso
+import SGPT.PSH.PrimeNov16OriginalLocalChartComparison
+import SGPT.PSH.PrimeNov16OriginalHypersurface
+import SGPT.PSH.PrimeNov16OriginalHypersurfaceDictionary
+import SGPT.PSH.PrimeNov16OriginalComponentPreimage
+import SGPT.PSH.PrimeNov16OriginalFibreDictionary
+import SGPT.PSH.PrimeNov16OriginalComponentClosure
+import SGPT.PSH.PrimeNov16OriginalStrictTransform
+import SGPT.PSH.PrimeNov16OriginalStrictTransformEquality
+import SGPT.PSH.PrimeNov16OriginalSmoothComposition
+import SGPT.PSH.PrimeNov16OriginalStrictComposition
+import SGPT.PSH.PrimeNov16OriginalPrimePresentation
+import SGPT.PSH.PrimeNov16OriginalPrimeQuotient
+import SGPT.PSH.PrimeNov16OriginalPrimeCenters
+
+/-! Full original prime-divisor definition: all32 checked mathematical producers. -/

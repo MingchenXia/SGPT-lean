@@ -1,0 +1,27 @@
+name = "sgptLean"
+version = "0.1.0"
+defaultTargets = ["SGPT"]
+
+[leanOptions]
+autoImplicit = false
+pp.unicode.fun = true
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "0df444a360eaa60ab8c11dca51a86af692955474"
+
+[[lean_lib]]
+name = "SGPT"
+roots = ["SGPT"]
+globs = [
+  "SGPT",
+  "SGPT.Addenda.Resolution",
+  "SGPT.Addenda.Okounkov",
+  "SGPT.Checks.Comparison",
+  "SGPT.Checks.Literature",
+  "SGPT.Checks.NonArchimedean",
+  "SGPT.Checks.Okounkov",
+  "SGPT.Checks.RationalHull",
+  "SGPT.Checks.Trace",
+]
